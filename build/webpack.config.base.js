@@ -1,23 +1,30 @@
-const path = require("path")
-
+const path = require('path')
+const vueLoaderOptions = require('./vue-loader.config')
 const isDev = process.env.NODE_ENV === 'development'
 const config = {
-  mode: "development",
-  target: "web",
-  entry: path.join(__dirname,"../src/index.js"),
+  mode: 'development',
+  target: 'web',
+  entry: path.join(__dirname, '../src/index.js'),
   output: {
-    filename: "bundle.[chunk].js",
-    path: path.join(__dirname,"dist")
+    filename: 'bundle.[chunk].js',
+    path: path.join(__dirname, '../dist')
   },
   module: {
     rules: [
       {
+        test: /\.(vue|js|jsx)$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        enforce: 'pre'
+      },
+      {
         test: /\.vue$/,
-        loader: "vue-loader"
+        loader: 'vue-loader',
+        options: vueLoaderOptions(isDev)
       },
       {
         test: /\.jsx$/,
-        loader: "babel-loader"
+        loader: 'babel-loader'
       },
       {
         test: /\.js$/,
@@ -32,12 +39,11 @@ const config = {
             limit: 1024,
             name: 'resources/[path][name]-[hash:8].[ext]'
           }
-        }  
+        }
         ]
       }
     ]
   }
 }
 
-
-module.exports= config
+module.exports = config

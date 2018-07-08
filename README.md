@@ -35,3 +35,10 @@
  npm i babel-helper-vue-jsx-merge-props babel-plugin-syntax-jsx
  npm i extract-text-webpack-plugin
  npm i webpack-merge -D
+ npm i vue-style-loader -D
+ npm i rimraf -D //打包前刪除
+
+ npm i eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node -D
+ npm i eslint-plugin-html -D
+ npm i eslint-loader babel-eslint -D
+ npm i husky -D
