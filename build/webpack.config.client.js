@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const ExtractPlugin = require('extract-text-webpack-plugin')
 const baseConfig = require('./webpack.config.base')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const isDev = process.env.NODE_ENV === 'development'
 const defaultPlugins = [
   new webpack.DefinePlugin({
@@ -11,7 +12,10 @@ const defaultPlugins = [
       NODE_ENV: isDev ? '"development"' : '"production"'
     }
   }),
-  new HTMLPlugin()
+  new HTMLPlugin({
+    template: path.join(__dirname, '../index.html')
+  }),
+  new VueLoaderPlugin()
 ]
 
 const devServer = {
@@ -26,7 +30,6 @@ let config
 
 if (isDev) {
   config = merge(baseConfig, {
-    mode: 'development',
     devtool: '#cheap-module-eval-source-map',
     module: {
       rules: [
@@ -47,20 +50,23 @@ if (isDev) {
       ]
     },
     devServer,
+    // import Vue from 'vue
+    resolve: {
+      alias: {
+        'vue': path.join(__dirname, '../node_modules/vue/dist/vue.esm.js')
+      }
+    },
     plugins: defaultPlugins.concat([
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoEmitOnErrorsPlugin()
+      new webpack.HotModuleReplacementPlugin()
     ])
   })
 } else {
   config = merge(baseConfig, {
-    mode: 'production',
     entry: {
-      app: path.join(__dirname, '../src/index.js'),
-      vendor: ['vue']
+      app: path.join(__dirname, '../client/index.js')
     },
     output: {
-      filename: '[name].[chuckhash:8].js'
+      filename: '[name].[chunkhash:8].js'
     },
     module: {
       rules: [
@@ -82,14 +88,22 @@ if (isDev) {
         }
       ]
     },
+    optimization: {
+      splitChunks: {
+        chunks: 'all'
+      },
+      runtimeChunk: true
+    },
     plugins: defaultPlugins.concat([
-      new ExtractPlugin('styles.[contentHash:8].css'),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor'
-      }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'runtime'
-      })
+      new ExtractPlugin('styles.[contentHash:8].css')
+
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   name: 'vendor'
+      // }),
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   name: 'runtime'
+      // })
     ])
   })
 }
+module.exports = config

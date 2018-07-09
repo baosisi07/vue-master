@@ -10,8 +10,8 @@
       }
     }
 </script>
-<style>
-    .test {
-        color: red
-    }
+<style  lang="scss" scoped type="text/css">
+  .test {
+      color: red
+  }
 </style>

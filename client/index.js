@@ -1,9 +1,8 @@
 import Vue from 'vue'
-import App from './app.vue'
+
 import './assets/app.scss'
-const root = document.createElement('div')
-document.body.appendChild(root)
 
 new Vue({
-  render: (h) => h(App)
-}).$mount(root)
+  el: '#App',
+  template: '<div>this is sth</div>'
+})

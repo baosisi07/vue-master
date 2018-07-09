@@ -1,10 +1,10 @@
- npm init 
- npm i webpack vue vue-loader
- npm i webpack css-loader vue-template-compiler
- npm i webpack style-loader url-loader file-loader
- npm i webpack-dev-server
- npm i cross-env (不区分MAC和Windows平台的命令)
- 命令行定义 cross-env NODE_ENV=production
++ npm init
++ npm i webpack vue vue-loader
++ npm i webpack css-loader vue-template-compiler
++ npm i webpack style-loader url-loader file-loader
++ npm i webpack-dev-server
++ npm i cross-env (不区分MAC和Windows平台的命令)
++ 命令行定义 cross-env NODE_ENV=production
  webpack配置文件中获取 const isDev = process.env.NODE_ENV === 'development'
 ```
  config.devtool='#cheap-module-eval-source-map'//映射代码 帮助调试代码 编译后的代码不易读 不好定位错误
@@ -21,7 +21,7 @@
     new webpack.NoEmitOnErrorsPlugin()
   )
 ```
-  npm i html-webpack-plugin
++  npm i html-webpack-plugin
 
 ```
   new webpack.DefinePlugin({
@@ -30,15 +30,24 @@
       }//编译过程获取及js中获取
     })
 ```
- npm i postcss-loader autoprefixer babel-loader babel-core
- npm i babel-preset-env babel-plugin-transform-vue-jsx
- npm i babel-helper-vue-jsx-merge-props babel-plugin-syntax-jsx
- npm i extract-text-webpack-plugin
- npm i webpack-merge -D
- npm i vue-style-loader -D
- npm i rimraf -D //打包前刪除
++ npm i postcss-loader autoprefixer babel-loader babel-core
++ npm i babel-preset-env babel-plugin-transform-vue-jsx
++ npm i babel-helper-vue-jsx-merge-props babel-plugin-syntax-jsx
++ npm i extract-text-webpack-plugin
++ npm i webpack-merge -D
++ npm i vue-style-loader -D
++ npm i rimraf -D //打包前刪除
 
- npm i eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node -D
- npm i eslint-plugin-html -D
- npm i eslint-loader babel-eslint -D
- npm i husky -D
++ npm i eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise + eslint-plugin-import eslint-plugin-node -D
++ npm i eslint-plugin-html -D
++ npm i eslint-loader babel-eslint -D
++ npm i husky -D
+
+```
+optimization: {
+      splitChunks: {
+        chunks: 'all' //讲node_modules的内容打包到vendor
+      },
+      runtimeChunk: true
+    },
+```

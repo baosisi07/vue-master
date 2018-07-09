@@ -1,27 +1,27 @@
-const path = require("path")
-const HTMLPlugin=require('html-webpack-plugin')
-const webpack=require('webpack')
-const ExtractPlugin =require('extract-text-webpack-plugin')
+const path = require('path')
+const HTMLPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
+const ExtractPlugin = require('extract-text-webpack-plugin')
 const isDev = process.env.NODE_ENV === 'development'
 const config = {
-  mode: "development",
-  target: "web",
-  entry: path.join(__dirname,"src/index.js"),
+  mode: 'development',
+  target: 'web',
+  entry: path.join(__dirname, 'src/index.js'),
   output: {
-    filename: "bundle.[chunk].js",
-    path: path.join(__dirname,"dist")
+    filename: 'bundle.[chunk].js',
+    path: path.join(__dirname, 'dist')
   },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        loader: "vue-loader"
+        loader: 'vue-loader'
       },
       {
         test: /\.jsx$/,
-        loader: "babel-loader"
+        loader: 'babel-loader'
       },
-      
+
       {
         test: /\.(gif|jpg|jpeg|png|svg)$/,
         use: [{
@@ -30,7 +30,7 @@ const config = {
             limit: 1024,
             name: '[name].[ext]'
           }
-        }  
+        }
         ]
       }
     ]
@@ -38,31 +38,31 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV:isDev?'"development"':'"production"'
+        NODE_ENV: isDev ? '"development"' : '"production"'
       }
     }),
     new HTMLPlugin()
   ]
 }
 
-if(isDev){
+if (isDev) {
   config.module.rules.push({
-      test: /\.scss$/,
-      use: [
-        "style-loader",
-        "css-loader",
-        {
-          loader: "postcss-loader",
-          options: {
-            sourceMap: true
-          }
-        },
-        "sass-loader"
-      ]
-    },
+    test: /\.scss$/,
+    use: [
+      'style-loader',
+      'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: true
+        }
+      },
+      'sass-loader'
+    ]
+  }
   )
-  config.devtool='#cheap-module-eval-source-map'
-  config.devServer={
+  config.devtool = '#cheap-module-eval-source-map'
+  config.devServer = {
     port: 8000,
     host: '0.0.0.0',
     overlay: {
@@ -74,28 +74,27 @@ if(isDev){
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   )
-}else {
-  config.entry={
-    app: path.join(__dirname,"src/index.js"),
+} else {
+  config.entry = {
+    app: path.join(__dirname, 'src/index.js'),
     vendor: ['vue']
   }
-  config.output.filename='[name].[chuckhash:8].js'
+  config.output.filename = '[name].[chuckhash:8].js'
   config.module.rules.push({
-      test: /\.scss$/,
-      use: ExtractPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          "css-loader",
+    test: /\.scss$/,
+    use: ExtractPlugin.extract({
+      fallback: 'style-loader',
+      use: [
+        'css-loader',
         {
-          loader: "postcss-loader",
+          loader: 'postcss-loader',
           options: {
             sourceMap: true
           }
         },
-        "sass-loader"
-        ]
-      })
-    
+        'sass-loader'
+      ]
+    })
   })
   config.plugins.push(
     new ExtractPlugin('styles.[contentHash:8].css'),
@@ -107,4 +106,4 @@ if(isDev){
     })
   )
 }
-module.exports= config
+module.exports = config
