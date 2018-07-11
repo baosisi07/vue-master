@@ -51,3 +51,6 @@ optimization: {
       runtimeChunk: true
     },
 ```
+
++ npm i vue-router -S
++ npm i vuex -S

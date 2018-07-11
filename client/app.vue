@@ -1,5 +1,8 @@
 <template>
-    <div class="test">{{text}}</div>
+<div>
+  <div class="test">{{text}}</div>
+  <router-view />
+</div>
 </template>
 <script>
     export default {

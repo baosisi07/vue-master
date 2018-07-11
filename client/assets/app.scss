@@ -1,4 +1,11 @@
 $ss: '#333';
+$red: 'red';
 body {
-  background-color:$ss
+  color:$ss
+}
+.link-active {
+  background-color: $ss
+}
+.link-exact-active {
+  background-color: $red
 }
