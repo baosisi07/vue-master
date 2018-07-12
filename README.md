@@ -54,3 +54,15 @@ optimization: {
 
 + npm i vue-router -S
 + npm i vuex -S
+
++ 动态加载组件
+当路由被访问的时候才加载对应组件
++ npm i babel-plugin-syntax-dynamic-import -D
+
+```
+{
+    path: '/login',
+    component: () => import('../login.vue')
+  }
+```
++ npm i babel-preset-stage-1 -D

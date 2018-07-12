@@ -1,5 +1,4 @@
-import Login from '../login.vue'
-import App from '../app.vue'
+
 export default [
   {
     path: '/',
@@ -7,16 +6,16 @@ export default [
   },
   {
     path: '/app',
-    component: App,
+    component: () => import('../app.vue'),
     children: [
       {
         path: 'test',
-        component: Login
+        component: () => import('../login.vue')
       }
     ]
   },
   {
     path: '/login',
-    component: Login
+    component: () => import('../login.vue')
   }
 ]
