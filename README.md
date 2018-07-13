@@ -66,3 +66,28 @@ optimization: {
   }
 ```
 + npm i babel-preset-stage-1 -D
+
++ 给vuex添加热更替功能
+
+```
+if (module.hot) {
+    module.hot.accept([
+      './state/state',
+      './mutations/mutations',
+      './getters/getters',
+      './actions/actions'
+    ], () => {
+      const newState = require('./state/state').default
+      const newMutations = require('./mutations/mutations').default
+      const newGetters = require('./getters/getters').default
+      const newActions = require('./actions/actions').default
+
+      store.hotUpdate({
+        state: newState,
+        mutations: newMutations,
+        getters: newGetters,
+        actions: newActions
+      })
+    })
+  }
+```

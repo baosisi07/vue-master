@@ -9,7 +9,9 @@
 <script>
     import {
       mapState,
-      mapGetters
+      mapGetters,
+      mapMutations,
+      mapActions
     } from 'vuex'
     export default {
       data () {
@@ -22,10 +24,22 @@
         ...mapGetters(['fullName'])
       },
       mounted () {
-        let i = 1
-        setInterval(() => {
-          this.$store.commit('updateCount', i++)
-        }, 1000)
+        // let i = 1
+        // setInterval(() => {
+        //   this.$store.commit('updateCount', i++)
+        // }, 1000)
+        // this.$store.dispatch('updateCountAsync', {
+        //   num: 5,
+        //   time: 2000
+        // })
+        this.updateCountAsync({
+          num: 4,
+          time: 2000
+        })
+      },
+      methods: {
+        ...mapMutations(['updateCount']),
+        ...mapActions(['updateCountAsync'])
       }
     }
 </script>
