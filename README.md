@@ -91,3 +91,12 @@ if (module.hot) {
     })
   }
 ```
+
++ 服务端渲染
++ npm i vue-server-renderer -S
++ npm i koa -S
++ npm i koa-router -S
++ npm i axios -S
++ npm i memory-fs -D
++ npm i ejs -S
+
