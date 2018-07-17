@@ -1,5 +1,9 @@
 export default {
-  count: 0,
-  firstName: '122',
-  lastName: 'ss'
+  login: false,
+  userinfo: {
+    'username': '',
+    'password': '',
+    'isAdmin': false,
+    'userId': 0
+  }
 }

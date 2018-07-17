@@ -5,6 +5,7 @@
     ],
     "plugins": [
         "transform-vue-jsx",
-        "syntax-dynamic-import"
+        "syntax-dynamic-import",
+        "transform-runtime"
     ]
 }

@@ -19,6 +19,13 @@ const config = {
         enforce: 'pre'
       },
       {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ]
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderOptions(isDev)
@@ -31,6 +38,15 @@ const config = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: 'fonts/[path][name]-[hash:8].[ext]'
+          }
+        }]
       },
       {
         test: /\.(gif|jpg|jpeg|png|svg)$/,
