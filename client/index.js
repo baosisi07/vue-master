@@ -7,6 +7,7 @@ import Vuex from 'vuex'
 import createStore from './store/store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import { getSessionStore } from './config/util'
 Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
 
 Vue.use(vueRouter)
@@ -15,20 +16,30 @@ const router = createRouter()
 const store = createStore()
 
 router.beforeEach((to, from, next) => {
+  const isLogined = getSessionStore('login')
+  const defaultNav = getSessionStore('defaultNav')
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    console.log(store)
-    if (!store.state.login) {
+    if (!isLogined) {
       next({
         path: '/login',
         query: { redirect: to.fullPath }
       })
     } else {
-      next()
+      if (from.fullPath !== '/') {
+        store.commit('CURRENT_ROUTER', {
+          defaultNav
+        })
+        next(false)
+      } else {
+        next()
+      }
     }
+    next()
   } else {
     next()
   }
 })
+
 new Vue({
   store,
   router,

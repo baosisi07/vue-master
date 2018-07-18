@@ -1,9 +1,9 @@
 <template>
   <div class="sidebar">
-    <el-menu :default-active="defaultNav" class="el-menu-vertical-demo" theme="dark" @select="handleSelect" background-color="#324157"
+    <el-menu :default-active="getCurrent" class="el-menu-vertical-demo" theme="dark" @select="handleSelect" background-color="#324157"
       text-color="#eee"
       active-text-color="#409EFF"  unique-opened router>
-      <template v-for="item in menus">
+      <template v-for="item in getMenus">
         <el-menu-item v-if="!item.submenu" :index="item.index" :key="item.index">
         <i :class="item.icon"></i>
         <span>{{item.name}}</span>
@@ -23,30 +23,27 @@
   </div>
 </template>
 <script>
+    import { mapGetters, mapMutations } from 'vuex'
+    import { getSessionStore } from '../../config/util'
+
     export default {
       data () {
         return {
-          defaultNav: '/home/dataInput',
-          menus: [
-            {
-              name: '数据录入',
-              index: '/home/dataInput',
-              icon: 'el-icon-edit'
-            },
-            {
-              name: '数据验证',
-              index: '/home/validateData',
-              icon: 'el-icon-circle-check-outline'
-            }
-          ]
         }
       },
       computed: {
-
+        ...mapGetters(['getMenus', 'getCurrent'])
+      },
+      created () {
+        const dNav = getSessionStore('defaultNav')
+        this.setRouter({defaultNav: dNav})
       },
       methods: {
+        ...mapMutations({
+          setRouter: 'CURRENT_ROUTER'
+        }),
         handleSelect (index, indexPath) {
-          this.defaultNav = index
+          this.setRouter({defaultNav: index})
         }
       }
     }

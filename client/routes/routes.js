@@ -22,6 +22,11 @@ export default [
         path: 'validateData',
         component: () => import('../components/pages/validateData.vue'),
         meta: { requiresAuth: true }
+      },
+      {
+        path: 'taskCenter',
+        component: () => import('../components/pages/taskCenter.vue'),
+        meta: { requiresAuth: true }
       }
     ]
   },

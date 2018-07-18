@@ -26,7 +26,6 @@
 
 <script>
 import {
-  mapState,
   mapActions
 } from 'vuex'
 export default {
@@ -43,14 +42,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['login'])
   },
   methods: {
     ...mapActions(['userLogin']),
     submitForm (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          await this.userLogin({'username': this.ruleForm.name, 'password': this.ruleForm.password})
+          console.log(this.$router)
+          await this.userLogin({'username': this.ruleForm.name, 'password': this.ruleForm.password, 'router': this.$router})
         } else {
           return false
         }
@@ -58,13 +57,6 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
-    }
-  },
-  watch: {
-    login () {
-      this.$router.push({
-        path: '/home'
-      })
     }
   }
 }

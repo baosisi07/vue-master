@@ -12,7 +12,7 @@
                 <el-dropdown trigger="click">
                 <div><img src="../../assets/images/b_header.jpg" width="40px" />
                     <span class="username">
-                    {{name}}<i class="el-icon-arrow-down"></i>
+                    {{user}}<i class="el-icon-arrow-down"></i>
                   </span></div>
 
                     <el-dropdown-menu slot="dropdown">
@@ -22,7 +22,7 @@
                             </div>
                         </el-dropdown-item>
                         <el-dropdown-item divided>
-                            <div class="setting-div">
+                            <div class="setting-div" @click="logout">
                                 <span class="setting-string">退出</span>
                             </div>
 
@@ -40,15 +40,21 @@
 </template>
 
 <script>
-    export default {
-      data () {
-        return {
-          name: 'linxin'
-        }
-      },
-      methods: {
-
+  import { mapActions } from 'vuex'
+  import { getSessionStore } from '../../config/util'
+  const user = getSessionStore('username')
+  export default {
+    data () {
+      return {
+        user: user
+      }
+    },
+    methods: {
+      ...mapActions(['userLogout']),
+      logout () {
+        this.userLogout({ 'username': '', 'password': '', 'router': this.$router })
       }
     }
+  }
 </script>
 

@@ -13,5 +13,14 @@ export default {
         config.success(res)
       }
     })
+  },
+  Logout (data, config) {
+    Request('/api/logout', {
+      type: 'get',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
   }
 }
