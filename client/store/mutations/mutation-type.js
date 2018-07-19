@@ -1,3 +1,4 @@
 export const RECORD_USERINFO = 'RECORD_USERINFO'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const CURRENT_ROUTER = 'CURRENT_ROUTER'
+export const GET_MENUS = 'GET_MENUS'

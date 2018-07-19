@@ -7,7 +7,8 @@ export default {
     'userId': 0
   },
   defaultNav: '',
-  menus: [
+  menus: [],
+  normalMenus: [
     {
       name: '数据录入',
       index: '/home/dataInput',

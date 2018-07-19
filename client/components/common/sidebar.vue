@@ -36,11 +36,14 @@
       },
       created () {
         const dNav = getSessionStore('defaultNav')
+        const isAdmin = getSessionStore('isAdmin')
         this.setRouter({defaultNav: dNav})
+        this.setMenus({isAdmin})
       },
       methods: {
         ...mapMutations({
-          setRouter: 'CURRENT_ROUTER'
+          setRouter: 'CURRENT_ROUTER',
+          setMenus: 'GET_MENUS'
         }),
         handleSelect (index, indexPath) {
           this.setRouter({defaultNav: index})

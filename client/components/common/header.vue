@@ -42,12 +42,16 @@
 <script>
   import { mapActions } from 'vuex'
   import { getSessionStore } from '../../config/util'
-  const user = getSessionStore('username')
+
   export default {
     data () {
       return {
-        user: user
+        user: ''
       }
+    },
+    created () {
+      const user = getSessionStore('username')
+      this.user = user
     },
     methods: {
       ...mapActions(['userLogout']),

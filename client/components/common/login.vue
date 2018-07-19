@@ -48,7 +48,6 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          console.log(this.$router)
           await this.userLogin({'username': this.ruleForm.name, 'password': this.ruleForm.password, 'router': this.$router})
         } else {
           return false

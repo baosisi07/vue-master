@@ -37,6 +37,7 @@ body {
   color:#fff;
 }
 .user-header{
+  text-align: right;
   font-size:12px;
   cursor:pointer;
 }
@@ -91,5 +92,43 @@ cursor:pointer;
     border-right: none;
   }
 
+}
+.bread {
+  margin-bottom: 20px;
+  font-size: 24px!important;
+
+}
+.content-body {
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 4px #eee;
+  .el-form-item {
+    width: 48%;
+    .el-form-item__content {
+      width: 60%;
+      .el-input {
+        width: 80%;
+      }
+      .el-select,
+      .el-cascader {
+        width: 100%;
+      }
+    }
+  }
+  .btn_group {
+    width: 60%;
+    margin: 0 20%;
+    margin-top: 20px;
+  }
+}
+.b_flex {
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  .b_space_normal {
+    padding: 10px 0
+  }
 }
 
