@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { Loading } from 'element-ui'
-
-const baseUrl = 'http://mock.eolinker.com/raqyxQE1a9f91674ea5376ddcb4ab8408458d3e36228994?uri='
+import { getSessionStore } from './util'
+const baseUrl = 'http://mock.eolinker.com/Cldhjhg37a85d28f61807a215b4765daec6d7dfc20132a7?uri='
+const authToken = 'JWT ' + getSessionStore('auth')
 const Request = (url, config) => {
   const loadingInstance = Loading.service({
     lock: true,
@@ -13,6 +14,10 @@ const Request = (url, config) => {
     method: config.type || 'get',
     url: baseUrl + url,
     // baseURL: baseUrl,
+    headers: {
+      'Authorization': authToken || '',
+      'content-type': 'application/json'
+    },
     data: config.data,
     timeout: 10000
   })

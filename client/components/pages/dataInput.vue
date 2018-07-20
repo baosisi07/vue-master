@@ -1,9 +1,6 @@
 <template>
    <div>
-    <el-breadcrumb class="bread" separator="/">
-      <el-breadcrumb-item :to="{ name: 'dataInput' }">数据录入</el-breadcrumb-item>
-    </el-breadcrumb>
-
+    <pageTitle vtitle="数据录入"></pageTitle>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" inline label-width="100px" class="content-body">
   <el-form-item label="城市" prop="city">
     <el-cascader v-model="ruleForm.city"
@@ -103,6 +100,7 @@
 </template>
 <script>
 import { getSessionStore } from '../../config/util'
+import pageTitle from '../common/pageTitle.vue'
 export default {
   data () {
     return {
@@ -159,10 +157,10 @@ export default {
       },
       rules: {
         city: [
-          { required: true, message: '请选择城市', trigger: 'blur' }
+          { required: true, message: '请选择城市', trigger: 'change' }
         ],
         carType: [
-          { required: true, message: '请选择车辆型号', trigger: 'blur' }
+          { required: true, message: '请选择车辆型号', trigger: 'change' }
         ],
         mails: [
           { required: true, message: '请输入里程', trigger: 'blur' }
@@ -193,6 +191,7 @@ export default {
       next()
     }
   },
+  components: {pageTitle},
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {

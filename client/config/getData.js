@@ -6,7 +6,7 @@ import Request from './baseRequest'
 
 export default {
   Login (data, config) {
-    Request('/api/login', {
+    Request('/api/v1/auth/', {
       type: 'post',
       data,
       success: (res) => {
@@ -17,6 +17,15 @@ export default {
   Logout (data, config) {
     Request('/api/logout', {
       type: 'get',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  getTaskHistory (data, config) {
+    Request('/api/taskHistory', {
+      type: 'post',
       data,
       success: (res) => {
         config.success(res)

@@ -30,6 +30,12 @@ export default [
         name: 'taskCenter',
         component: () => import('../components/pages/taskCenter.vue'),
         meta: { requiresAuth: true }
+      },
+      {
+        path: 'assignTask',
+        name: 'assignTask',
+        component: () => import('../components/pages/assignTask.vue'),
+        meta: { requiresAuth: true }
       }
     ]
   },

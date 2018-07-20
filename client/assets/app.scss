@@ -96,7 +96,7 @@ cursor:pointer;
 .bread {
   margin-bottom: 20px;
   font-size: 24px!important;
-
+  color: #333;
 }
 .content-body {
   padding: 30px;
@@ -107,7 +107,8 @@ cursor:pointer;
     width: 48%;
     .el-form-item__content {
       width: 60%;
-      .el-input {
+      .el-input,
+      .el-date-editor {
         width: 80%;
       }
       .el-select,
@@ -131,4 +132,17 @@ cursor:pointer;
     padding: 10px 0
   }
 }
-
+.el-table {
+  th {
+    background-color: #eef1f6!important;
+    border-bottom: solid 1px #dfe6ec!important;
+    color: #333;
+  }
+  border: solid 1px #dfe6ec;
+}
+.b_pagination {
+  margin: 20px 0;
+  .el-pagination {
+    float: right;
+  }
+}

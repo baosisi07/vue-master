@@ -1,12 +1,16 @@
-import { RECORD_USERINFO, LOGOUT_USER, GET_MENUS, CURRENT_ROUTER } from './mutation-type'
+import { RECORD_USERINFO, LOGOUT_USER, GET_MENUS, CURRENT_ROUTER, OBTAIN_TASK_HISTORY } from './mutation-type'
 import { setSessionStore, removeSessionStore } from '../../config/util'
 export default {
   // 记录用户信息
   [RECORD_USERINFO] (state, info) {
     setSessionStore('login', true)
     setSessionStore('username', info.username)
+    setSessionStore('auth', info.auth)
     setSessionStore('isAdmin', info.isAdmin)
-    if (info.isAdmin) {
+    if (info.isAdmin === 9) {
+    // setSessionStore('isAdmin', true)
+    // const isAdmin = true
+    // if (isAdmin) {
       setSessionStore('defaultNav', state.adminMenus[0].index)
     } else {
       setSessionStore('defaultNav', state.normalMenus[0].index)
@@ -24,7 +28,7 @@ export default {
   },
   [GET_MENUS] (state, info) {
     const isAdmin = info.isAdmin
-    if (isAdmin === 'true') {
+    if (isAdmin === '9') {
       state.menus = Object.assign({}, state.adminMenus)
     } else {
       state.menus = Object.assign({}, state.normalMenus)
@@ -34,5 +38,8 @@ export default {
   [CURRENT_ROUTER] (state, info) {
     state.defaultNav = info.defaultNav
     setSessionStore('defaultNav', state.defaultNav)
+  },
+  [OBTAIN_TASK_HISTORY] (state, info) {
+    return state.taskHistory
   }
 }

@@ -1,9 +1,6 @@
 <template>
    <div>
-     <el-breadcrumb class="bread" separator="/">
-      <el-breadcrumb-item :to="{ name: 'dataInput' }">数据录入</el-breadcrumb-item>
-    </el-breadcrumb>
-
+    <pageTitle vtitle="数据验证"></pageTitle>
     <div class="content-body">
       <div class="el-row b_flex">
         <div class="el-col-8 b_space_normal">数据来源</div>
@@ -36,34 +33,36 @@
    </div>
 </template>
 <script>
-    export default {
-      data () {
-        return {
-          dialogFormVisible: false,
-          form: {
-            purchesePrice: '',
-            retailPrice: ''
-          }
-        }
-      },
-      methods: {
-        deleteConfirm () {
-          this.$confirm('确定将此条数据作废吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.$message({
-              type: 'success',
-              message: '已作废!'
-            })
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消作废！'
-            })
-          })
-        }
+import pageTitle from '../common/pageTitle.vue'
+export default {
+  data () {
+    return {
+      dialogFormVisible: false,
+      form: {
+        purchesePrice: '',
+        retailPrice: ''
       }
     }
+  },
+  components: {pageTitle},
+  methods: {
+    deleteConfirm () {
+      this.$confirm('确定将此条数据作废吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '已作废!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消作废！'
+        })
+      })
+    }
+  }
+}
 </script>

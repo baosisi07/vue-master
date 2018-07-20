@@ -2,11 +2,14 @@ import getData from '../../config/getData'
 import { getSessionStore } from '../../config/util'
 export default {
   userLogin (store, data) {
-    const postData = { 'username': data.username, 'password': data.password }
+    const postData = { 'account': data.username, 'password': data.password, 'appid': 'aaaf6b8021b411e7863a305a3a7b52d5' }
     getData.Login(postData, {
       success (res) {
-        postData.userId = res.data.user_id
-        postData.isAdmin = res.data.isAdmin
+        console.log(res)
+        postData.userId = res.data.id
+        postData.isAdmin = res.data.profile.user_type
+        postData.username = res.data.profile.alias
+        postData.auth = res.data.token
         store.commit('RECORD_USERINFO', postData)
         const isLogined = getSessionStore('login')
         if (isLogined) {
@@ -27,6 +30,14 @@ export default {
         data.router.push({
           path: '/login'
         })
+      }
+    })
+  },
+  getTaskHistory (store, data) {
+    const postData = { 'userId': store.userId }
+    getData.Logout(postData, {
+      success (res) {
+        store.commit('OBTAIN_TASK_HISTORY', postData)
       }
     })
   }
