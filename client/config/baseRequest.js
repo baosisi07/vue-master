@@ -18,7 +18,7 @@ const Request = (url, config) => {
       'Authorization': authToken || '',
       'content-type': 'application/json'
     },
-    data: config.data,
+    data: config.data || '',
     timeout: 10000
   })
     .then(res => {

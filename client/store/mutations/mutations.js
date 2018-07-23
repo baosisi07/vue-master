@@ -1,5 +1,6 @@
-import { RECORD_USERINFO, LOGOUT_USER, GET_MENUS, CURRENT_ROUTER, OBTAIN_TASK_HISTORY } from './mutation-type'
+import { RECORD_USERINFO, LOGOUT_USER, GET_MENUS, CURRENT_ROUTER, OBTAIN_TASK_HISTORY, GET_CITIES, GET_BRAND, GET_MODEL, GET_MODEL_DETAIL } from './mutation-type'
 import { setSessionStore, removeSessionStore } from '../../config/util'
+import vue from 'vue'
 export default {
   // 记录用户信息
   [RECORD_USERINFO] (state, info) {
@@ -41,5 +42,85 @@ export default {
   },
   [OBTAIN_TASK_HISTORY] (state, info) {
     return state.taskHistory
+  },
+  [GET_CITIES] (state, info) {
+    let newCities = []
+    info.forEach(function (val) {
+      let city = []
+      city.label = val.name
+      city.value = val.slug
+      city.children = []
+      if (val.cities.length > 0) {
+        val.cities.forEach(function (v) {
+          const cityChild = {}
+          cityChild.label = v.name
+          cityChild.value = v.slug
+          city.children.push(cityChild)
+        })
+      }
+      newCities.push(city)
+    })
+    state.cities = newCities
+    console.log(state.cities)
+    return state.cities
+  },
+  [GET_BRAND] (state, info) {
+    let newBrand = []
+    info.forEach(function (val) {
+      let brand = []
+      brand.label = val.name
+      brand.value = val.slug
+      brand.children = []
+      newBrand.push(brand)
+    })
+    state.brandList = newBrand
+    return state.brandList
+  },
+  [GET_MODEL] (state, info) {
+    let newModel = []
+    info.model.forEach(function (val) {
+      let model = []
+      model.label = val.name
+      model.value = val.slug
+      model.children = []
+      newModel.push(model)
+    })
+    state.modelList = newModel
+    state.brandList.forEach(function (val, i) {
+      if (val.value === info.brand) {
+        let obj = {}
+        obj.value = val.value
+        obj.label = val.label
+        obj.children = newModel
+        vue.set(state.brandList, i, obj)
+        // state.brandList[i].children = newModel
+      }
+    })
+    return state.brandList
+  },
+  [GET_MODEL_DETAIL] (state, info) {
+    let newModelDetail = []
+    info.modelDetail.forEach(function (val) {
+      let modelDetail = []
+      modelDetail.label = val.detail_model
+      modelDetail.value = val.detail_model_slug
+      newModelDetail.push(modelDetail)
+    })
+    state.modelDetailList = newModelDetail
+    state.brandList.forEach(function (val, index) {
+      if (val.value === info.brand) {
+        state.modelList.forEach(function (val1, i) {
+          if (val1.value === info.global_slug) {
+            let objDetail = {}
+            objDetail.value = val1.value
+            objDetail.label = val1.label
+            objDetail.children = newModelDetail
+            vue.set(state.brandList[index].children, i, objDetail)
+            // state.brandList[index].children[i].children = newModelDetail
+          }
+        })
+      }
+    })
+    return state.brandList
   }
 }

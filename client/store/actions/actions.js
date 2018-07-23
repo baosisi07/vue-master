@@ -5,7 +5,6 @@ export default {
     const postData = { 'account': data.username, 'password': data.password, 'appid': 'aaaf6b8021b411e7863a305a3a7b52d5' }
     getData.Login(postData, {
       success (res) {
-        console.log(res)
         postData.userId = res.data.id
         postData.isAdmin = res.data.profile.user_type
         postData.username = res.data.profile.alias
@@ -38,6 +37,42 @@ export default {
     getData.Logout(postData, {
       success (res) {
         store.commit('OBTAIN_TASK_HISTORY', postData)
+      }
+    })
+  },
+  getCities (store) {
+    getData.getCities('', {
+      success (res) {
+        store.commit('GET_CITIES', res.data)
+      }
+    })
+  },
+  getBrand (store) {
+    getData.getBrand('', {
+      success (res) {
+        store.commit('GET_BRAND', res.data)
+      }
+    })
+  },
+  getModel (store, data) {
+    const newData = {}
+    newData.brand = data.parent
+    getData.getModel(data, {
+      success (res) {
+        newData.model = res.data
+        store.commit('GET_MODEL', newData)
+      }
+    })
+  },
+  getModelDetail (store, data) {
+    const newMD = {}
+    newMD.global_slug = data.global_slug
+    newMD.order = data.order
+    getData.getModelDetail(newMD, {
+      success (res) {
+        newMD.brand = data.brand
+        newMD.modelDetail = res.data
+        store.commit('GET_MODEL_DETAIL', newMD)
       }
     })
   }

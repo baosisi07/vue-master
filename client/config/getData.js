@@ -23,6 +23,40 @@ export default {
       }
     })
   },
+  getCities (data, config) {
+    Request('/api/v1/cities/', {
+      type: 'get',
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  getBrand (data, config) {
+    Request('/api/v1/brands/', {
+      type: 'get',
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  getModel (data, config) {
+    Request('/api/v1/models/', {
+      type: 'get',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  getModelDetail (data, config) {
+    Request('/api/v1/model-details/', {
+      type: 'get',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
   getTaskHistory (data, config) {
     Request('/api/taskHistory', {
       type: 'post',
