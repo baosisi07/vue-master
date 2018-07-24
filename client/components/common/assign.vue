@@ -4,7 +4,7 @@
   <el-form-item label="人员" prop="people">
     <el-select v-model="assignForm.people" filterable placeholder="请选择">
     <el-option
-      v-for="item in taskTypeList"
+      v-for="item in usersList"
       :key="item.value"
       :label="item.label"
       :value="item.value">
@@ -22,15 +22,17 @@
   </el-select>
   </el-form-item>
   <el-form-item label="任务名称" prop="taskName">
-    <el-input type="text" v-model="assignForm.taskName"></el-input>
+    <el-input type="text" v-model.lazy="assignForm.taskName"></el-input>
   </el-form-item>
   <el-form-item label="数量" prop="number">
-    <el-input type="number" v-model="assignForm.number"></el-input>
+    <el-input type="number" v-model.lazy="assignForm.number"></el-input>
   </el-form-item>
   <el-form-item  label="起止时间" prop="startEndDate">
     <el-date-picker
       v-model="assignForm.startEndDate"
       type="daterange"
+      format="yyyy-MM-dd"
+      value-format="yyyy-MM-dd"
       range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期">
@@ -44,7 +46,7 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -75,15 +77,34 @@ export default {
     }
   },
   computed: {
-    ...mapState(['taskTypeList'])
+    ...mapState(['taskTypeList', 'usersList'])
+  },
+  created () {
+    this.getUserList()
   },
   methods: {
+    ...mapActions(['getUserList', 'postTaskInfo']),
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log('submit!')
+          const formObj = this.assignForm
+          const data = {
+            user_id: formObj.people,
+            task_name: formObj.taskName,
+            task_amount: formObj.number,
+            starting_date: formObj.startEndDate[0],
+            finishing_date: formObj.startEndDate[0],
+            task_type: formObj.taskType,
+            refs: () => { this.$refs['assignForm'].resetFields() },
+            showMsg: (res) => {
+              this.$message({
+                message: res.msg,
+                type: res.type
+              })
+            }
+          }
+          this.postTaskInfo(data)
         } else {
-          console.log('error submit!!')
           return false
         }
       })

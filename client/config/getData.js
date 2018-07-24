@@ -58,7 +58,25 @@ export default {
     })
   },
   getTaskHistory (data, config) {
-    Request('/api/taskHistory', {
+    Request('/api/v1/evlauation-tasks/', {
+      type: 'get',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  getUserList (data, config) {
+    Request('/api/v1/users/', {
+      type: 'get',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  postTaskInfo (data, config) {
+    Request('/api/v1/evaluation-tasks/', {
       type: 'post',
       data,
       success: (res) => {

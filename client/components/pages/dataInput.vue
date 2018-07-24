@@ -21,7 +21,7 @@
   <el-form-item label="平台" prop="platform">
     <el-select v-model="ruleForm.platform" placeholder="请选择">
     <el-option
-      v-for="item in options3"
+      v-for="item in dealTypeList"
       :key="item.value"
       :label="item.label"
       :value="item.value">
@@ -34,7 +34,7 @@
   <el-form-item label="颜色" prop="color">
     <el-select v-model="ruleForm.color" placeholder="请选择">
     <el-option
-      v-for="item in options3"
+      v-for="item in dealTypeList"
       :key="item.value"
       :label="item.label"
       :value="item.value">

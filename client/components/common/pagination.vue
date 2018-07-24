@@ -5,22 +5,35 @@
                 <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :current-page="currentPage4"
-                :page-sizes="[10, 20, 30, 40]"
-                :page-size="100"
+                :current-page="pagination.currentPage"
+                :page-sizes="pagination.pageSizes"
+                :page-size="pagination.pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="400">
+                :total="pagination.total">
               </el-pagination>
             </el-col>
         </el-row>
   </div>
 </template>
 <script>
-    export default {
-      data () {
-        return {
+import { mapState, mapActions } from 'vuex'
+export default {
+  data () {
+    return {
 
-        }
-      }
     }
+  },
+  methods: {
+    ...mapActions(['getTaskHistory']),
+    handleSizeChange (val) {
+      this.getTaskHistory({limit: val})
+    },
+    handleCurrentChange (val) {
+      this.getTaskHistory({currentPage: val})
+    }
+  },
+  computed: {
+    ...mapState(['pagination'])
+  }
+}
 </script>

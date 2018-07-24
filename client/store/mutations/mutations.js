@@ -1,4 +1,4 @@
-import { RECORD_USERINFO, LOGOUT_USER, GET_MENUS, CURRENT_ROUTER, OBTAIN_TASK_HISTORY, GET_CITIES, GET_BRAND, GET_MODEL, GET_MODEL_DETAIL } from './mutation-type'
+import { RECORD_USERINFO, LOGOUT_USER, GET_MENUS, CURRENT_ROUTER, OBTAIN_TASK_HISTORY, GET_CITIES, GET_BRAND, GET_MODEL, GET_USER, TASK_SEARCH, GET_MODEL_DETAIL } from './mutation-type'
 import { setSessionStore, removeSessionStore } from '../../config/util'
 import vue from 'vue'
 export default {
@@ -7,11 +7,11 @@ export default {
     setSessionStore('login', true)
     setSessionStore('username', info.username)
     setSessionStore('auth', info.auth)
+    // setSessionStore('isAdmin', 9)
+    // const isAdmin = 9
+    // if (isAdmin === 9) {
     setSessionStore('isAdmin', info.isAdmin)
     if (info.isAdmin === 9) {
-    // setSessionStore('isAdmin', true)
-    // const isAdmin = true
-    // if (isAdmin) {
       setSessionStore('defaultNav', state.adminMenus[0].index)
     } else {
       setSessionStore('defaultNav', state.normalMenus[0].index)
@@ -24,6 +24,7 @@ export default {
     removeSessionStore('login')
     removeSessionStore('defaultNav')
     removeSessionStore('isAdmin')
+    removeSessionStore('auth')
     state.userinfo = Object.assign({}, info)
     state.login = false
   },
@@ -40,8 +41,42 @@ export default {
     state.defaultNav = info.defaultNav
     setSessionStore('defaultNav', state.defaultNav)
   },
+  [GET_USER] (state, info) {
+    let users = []
+    info.forEach(function (val) {
+      let user = {}
+      user.value = val.id
+      user.label = val.profile.alias
+      users.push(user)
+    })
+    state.usersList = users
+    return state.usersList
+  },
+  [TASK_SEARCH] (state, info) {
+    if (info.limit) {
+      state.pagination.pageSize = info.limit
+    } else if (info.currentPage) {
+      state.pagination.currentPage = info.currentPage
+    } else {
+      state.taskSearchRuleForm = Object.assign({}, info)
+    }
+  },
   [OBTAIN_TASK_HISTORY] (state, info) {
-    return state.taskHistory
+    const data = []
+    state.pagination.total = info.count
+    info.results.forEach(function (val) {
+      const item = {}
+      item.name = val.user.profile.alias
+      item.taskDate = val.starting_date
+      item.taskType = val.task_type
+      item.taskName = val.task_name
+      item.totalTask = val.task_amount
+      item.finished = val.finished_amount
+      item.planFinish = val.finishing_date
+      data.push(item)
+    })
+    state.taskHistoryTable = data
+    return state.taskHistoryTable
   },
   [GET_CITIES] (state, info) {
     let newCities = []
@@ -61,7 +96,6 @@ export default {
       newCities.push(city)
     })
     state.cities = newCities
-    console.log(state.cities)
     return state.cities
   },
   [GET_BRAND] (state, info) {

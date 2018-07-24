@@ -44,66 +44,77 @@ export default {
   modelDetailList: [],
   taskTypeList: [
     {
-      value: '1',
+      value: 1,
       label: '量化任务-数据录入'
     },
     {
-      value: '2',
+      value: 2,
       label: '量化任务-数据验证'
     },
     {
-      value: '3',
-      label: '非量化任务'
-    },
-    {
-      value: '0',
+      value: 0,
       label: '全部'
     }
   ],
   conditionList: [
     {
-      value: '1',
+      value: 1,
       label: '车况一般'
     },
     {
-      value: '2',
+      value: 2,
       label: '车况较好'
     },
     {
-      value: '3',
+      value: 3,
       label: '车况优秀'
     }
   ],
+  usersList: [],
   dealTypeList: [
     {
-      value: '1',
+      value: 1,
       label: '车商零售'
     },
     {
-      value: '2',
+      value: 2,
       label: '车商收购'
     },
     {
-      value: '3',
+      value: 3,
       label: '个人交易'
     }
   ],
   useProperty: [
     {
-      value: '1',
+      value: 1,
       label: '营运车辆'
     },
     {
-      value: '2',
+      value: 2,
       label: '非营运车辆'
     },
     {
-      value: '3',
+      value: 3,
       label: '营转非'
     },
     {
-      value: '0',
+      value: 0,
       label: '全部'
     }
-  ]
+  ],
+  taskHistoryTable: [
+  ],
+  taskSearchRuleForm: {
+    people: '',
+    taskType: '',
+    startEndDate: ''
+  },
+  pagination: {
+    pageSizes: [10, 20, 30, 40],
+    pageSize: 10,
+    total: 0,
+    currentPage: 1,
+    jumpPage: 1
+  }
 }

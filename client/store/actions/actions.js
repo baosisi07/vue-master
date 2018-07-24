@@ -32,11 +32,28 @@ export default {
       }
     })
   },
-  getTaskHistory (store, data) {
-    const postData = { 'userId': store.userId }
-    getData.Logout(postData, {
+  getUserList (store) {
+    const userType = getSessionStore('isAdmin')
+    const data = {user_type: userType}
+    getData.getUserList(data, {
       success (res) {
-        store.commit('OBTAIN_TASK_HISTORY', postData)
+        store.commit('GET_USER', res.data)
+      }
+    })
+  },
+  getTaskHistory (store, data) {
+    store.commit('TASK_SEARCH', data)
+    const lastData = {
+      'limit': store.state.pagination.pageSize,
+      'offset': store.state.pagination.pageSize * (store.state.pagination.currentPage - 1),
+      'user_id': store.state.taskSearchRuleForm.people,
+      'task_type': store.state.taskSearchRuleForm.taskType,
+      'starting_date': store.state.taskSearchRuleForm.startEndDate[0],
+      'finishing_date': store.state.taskSearchRuleForm.startEndDate[1]
+    }
+    getData.getTaskHistory(lastData, {
+      success (res) {
+        store.commit('OBTAIN_TASK_HISTORY', res.data)
       }
     })
   },
@@ -73,6 +90,17 @@ export default {
         newMD.brand = data.brand
         newMD.modelDetail = res.data
         store.commit('GET_MODEL_DETAIL', newMD)
+      }
+    })
+  },
+  postTaskInfo (store, data) {
+    const postData = Object.assign({}, data)
+    delete postData.refs
+    getData.postTaskInfo(postData, {
+      success (res) {
+        data.refs()
+        data.showMsg({msg: '任务分配成功！', type: 'success'})
+        // store.commit('', res.data)
       }
     })
   }

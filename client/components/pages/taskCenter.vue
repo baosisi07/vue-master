@@ -2,11 +2,11 @@
    <div>
     <v-pageTitle vtitle="历史任务"></v-pageTitle>
 
-    <el-form inline :model="ruleForm" class="demo-form-inline">
+    <el-form inline :model="taskSearchRuleForm" class="demo-form-inline">
     <el-form-item label="人员">
-      <el-select v-model="ruleForm.people" placeholder="请选择">
+      <el-select v-model="taskSearchRuleForm.people" placeholder="请选择">
       <el-option
-        v-for="item in taskTypeList"
+        v-for="item in usersList"
         :key="item.value"
         :label="item.label"
         :value="item.value">
@@ -14,7 +14,7 @@
     </el-select>
     </el-form-item>
     <el-form-item label="任务类型">
-      <el-select v-model="ruleForm.taskType" placeholder="请选择">
+      <el-select v-model="taskSearchRuleForm.taskType" placeholder="请选择">
       <el-option
         v-for="item in taskTypeList"
         :key="item.value"
@@ -25,9 +25,9 @@
     </el-form-item>
     <el-form-item  label="起止时间">
       <el-date-picker
-        v-model="ruleForm.startEndDate"
+        v-model="taskSearchRuleForm.startEndDate"
         type="daterange"
-        format="yyyy 年 MM 月 dd 日"
+        format="yyyy-MM-dd"
         value-format="yyyy-MM-dd"
         range-separator="至"
         start-placeholder="开始日期"
@@ -46,7 +46,7 @@
               <span>任务列表</span>
               <el-button style="float: right; padding: 3px 0" type="text">新建</el-button>
             </div>
-            <el-table :data="tableData" style="width: 100%" stripe>
+            <el-table :data="taskHistoryTable" style="width: 100%" stripe>
             <el-table-column prop="name"  label="姓名"  width="180"></el-table-column>
             <el-table-column prop="taskDate" label="任务日期" width="180"></el-table-column>
             <el-table-column prop="taskType" label="任务类型" width="180"> </el-table-column>
@@ -68,24 +68,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      tableData: [{
-        name: 'Google Chrome',
-        taskDate: '13,392',
-        taskType: '4,214',
-        taskName: '50%',
-        totalTask: '22',
-        finished: '',
-        planFinish: ''
-      }, {
-        name: 'Google Chrome',
-        taskDate: '13,392',
-        taskType: '4,214',
-        taskName: '50%',
-        totalTask: '22',
-        finished: '',
-        planFinish: ''
-      }],
-      ruleForm: {
+      taskSearchRuleForm: {
         people: '',
         taskType: '',
         startEndDate: ''
@@ -94,13 +77,20 @@ export default {
   },
   components: {vPageTitle, vPagination},
   computed: {
-    ...mapState(['taskTypeList'])
+    ...mapState(['taskTypeList', 'usersList', 'taskHistoryTable'])
+  },
+  created () {
+    this.getUserList()
+    this.getTaskHistory({
+      people: '',
+      taskType: '',
+      startEndDate: ''
+    })
   },
   methods: {
-    ...mapActions(['getTaskHistory']),
+    ...mapActions(['getTaskHistory', 'getUserList']),
     searchHistory () {
-      console.log(this.ruleForm)
-      this.getTaskHistory(this.ruleForm)
+      this.getTaskHistory(this.taskSearchRuleForm)
     }
   }
 }
