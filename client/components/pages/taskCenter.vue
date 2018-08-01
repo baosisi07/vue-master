@@ -4,7 +4,7 @@
 
     <el-form inline :model="taskSearchRuleForm" class="demo-form-inline">
     <el-form-item label="人员">
-      <el-select v-model="taskSearchRuleForm.people" placeholder="请选择">
+      <el-select class="fixWid" v-model="taskSearchRuleForm.people" placeholder="请选择">
       <el-option
         v-for="item in usersList"
         :key="item.value"
@@ -41,7 +41,7 @@
 
   <el-row :gutter="20">
     <el-col :xs="24" :sm="24" :md="24" :lg="24">
-      <el-card class="box-card">
+      <el-card>
           <div slot="header" class="clearfix">
               <span>任务列表</span>
               <el-button style="float: right; padding: 3px 0" type="text">新建</el-button>

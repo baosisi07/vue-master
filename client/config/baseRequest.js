@@ -4,12 +4,15 @@ import { getSessionStore } from './util'
 const baseUrl = 'http://mock.eolinker.com/Cldhjhg37a85d28f61807a215b4765daec6d7dfc20132a7?uri='
 const authToken = 'JWT ' + getSessionStore('auth')
 const Request = (url, config) => {
-  const loadingInstance = Loading.service({
-    lock: true,
-    text: 'Loading',
-    spinner: 'el-icon-loading',
-    background: 'rgba(0, 0, 0, 0.7)'
-  })
+  let loadingInstance
+  if (!config.hideLoading) {
+    loadingInstance = Loading.service({
+      lock: true,
+      text: 'Loading',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    })
+  }
   axios({
     method: config.type || 'get',
     url: baseUrl + url,
@@ -22,7 +25,9 @@ const Request = (url, config) => {
     timeout: 10000
   })
     .then(res => {
-      loadingInstance.close()
+      if (!config.hideLoading) {
+        loadingInstance.close()
+      }
       return config.success(res)
     })
     .catch(function (error) {

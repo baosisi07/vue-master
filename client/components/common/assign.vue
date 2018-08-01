@@ -93,7 +93,7 @@ export default {
             task_name: formObj.taskName,
             task_amount: formObj.number,
             starting_date: formObj.startEndDate[0],
-            finishing_date: formObj.startEndDate[0],
+            finishing_date: formObj.startEndDate[1],
             task_type: formObj.taskType,
             refs: () => { this.$refs['assignForm'].resetFields() },
             showMsg: (res) => {

@@ -42,6 +42,7 @@ export default {
   brandList: [],
   modelList: [],
   modelDetailList: [],
+  dealerList: [],
   taskTypeList: [
     {
       value: 1,
@@ -50,10 +51,6 @@ export default {
     {
       value: 2,
       label: '量化任务-数据验证'
-    },
-    {
-      value: 0,
-      label: '全部'
     }
   ],
   conditionList: [
@@ -73,7 +70,11 @@ export default {
   usersList: [],
   dealTypeList: [
     {
-      value: 1,
+      value: 4,
+      label: '批发'
+    },
+    {
+      value: 3,
       label: '车商零售'
     },
     {
@@ -81,8 +82,73 @@ export default {
       label: '车商收购'
     },
     {
-      value: 3,
+      value: 1,
       label: '个人交易'
+    }
+  ],
+  platForm: [],
+  tasksData: {},
+  dataDetail: {},
+  colors: [
+    {
+      value: '红',
+      label: '红色'
+    },
+    {
+      value: '白',
+      label: '白色'
+    },
+    {
+      value: '黑',
+      label: '黑色'
+    },
+    {
+      value: '灰',
+      label: '灰色'
+    },
+    {
+      value: '金',
+      label: '金色'
+    },
+    {
+      value: '银',
+      label: '银色'
+    },
+    {
+      value: '棕',
+      label: '棕色'
+    },
+    {
+      value: '粉',
+      label: '粉色'
+    },
+    {
+      value: '橙',
+      label: '橙色'
+    },
+    {
+      value: '黄',
+      label: '黄色'
+    },
+    {
+      value: '绿',
+      label: '绿色'
+    },
+    {
+      value: '青',
+      label: '青色'
+    },
+    {
+      value: '蓝',
+      label: '蓝色'
+    },
+    {
+      value: '紫',
+      label: '紫色'
+    },
+    {
+      value: '其他',
+      label: '其他'
     }
   ],
   useProperty: [
@@ -91,16 +157,12 @@ export default {
       label: '营运车辆'
     },
     {
-      value: 2,
+      value: 3,
       label: '非营运车辆'
     },
     {
-      value: 3,
+      value: 2,
       label: '营转非'
-    },
-    {
-      value: 0,
-      label: '全部'
     }
   ],
   taskHistoryTable: [

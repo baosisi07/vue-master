@@ -1,4 +1,4 @@
-import { RECORD_USERINFO, LOGOUT_USER, GET_MENUS, CURRENT_ROUTER, OBTAIN_TASK_HISTORY, GET_CITIES, GET_BRAND, GET_MODEL, GET_USER, TASK_SEARCH, GET_MODEL_DETAIL } from './mutation-type'
+import { RECORD_USERINFO, LOGOUT_USER, GET_MENUS, CURRENT_ROUTER, OBTAIN_TASK_HISTORY, GET_CURRENT_TASK, GET_CITIES, GET_BRAND, GET_MODEL, GET_USER, TASK_SEARCH, GET_MODEL_DETAIL, GET_DATA_DETAIL, GET_PLATFORM, DEAL_DEALER } from './mutation-type'
 import { setSessionStore, removeSessionStore } from '../../config/util'
 import vue from 'vue'
 export default {
@@ -127,7 +127,6 @@ export default {
         obj.label = val.label
         obj.children = newModel
         vue.set(state.brandList, i, obj)
-        // state.brandList[i].children = newModel
       }
     })
     return state.brandList
@@ -150,11 +149,49 @@ export default {
             objDetail.label = val1.label
             objDetail.children = newModelDetail
             vue.set(state.brandList[index].children, i, objDetail)
-            // state.brandList[index].children[i].children = newModelDetail
           }
         })
       }
     })
     return state.brandList
+  },
+  [GET_CURRENT_TASK] (state, info) {
+    let currentData = {}
+    currentData.title = info.task_name
+    currentData.total = info.task_amount
+    currentData.finished = info.finished_amount
+    currentData.startDate = info.starting_date
+    currentData.finishDate = info.finishing_date
+    state.tasksData = Object.assign({}, currentData)
+  },
+  [GET_DATA_DETAIL] (state, info) {
+    state.dataDetail = Object.assign({}, info)
+  },
+  [GET_PLATFORM] (state, info) {
+    let newPlatform = []
+    info.forEach(function (val) {
+      let platform = []
+      platform.label = val.name
+      platform.value = val.domain
+      newPlatform.push(platform)
+    })
+    state.platForm = Object.assign({}, newPlatform)
+  },
+  [DEAL_DEALER] (state, info) {
+    if (!info.list) {
+      state.dealerList = []
+    } else {
+      let newList = []
+      info.list.forEach(function (val) {
+        let dealer = []
+        dealer.label = val.company_name
+        dealer.value = val.id
+        newList.push(dealer)
+      })
+      state.dealerList = newList.filter(item => {
+        return item.label.toLowerCase()
+          .indexOf(info.company_name.toLowerCase()) > -1
+      })
+    }
   }
 }

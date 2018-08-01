@@ -46,10 +46,10 @@ export default {
     const lastData = {
       'limit': store.state.pagination.pageSize,
       'offset': store.state.pagination.pageSize * (store.state.pagination.currentPage - 1),
-      'user_id': store.state.taskSearchRuleForm.people,
+      'user': store.state.taskSearchRuleForm.people,
       'task_type': store.state.taskSearchRuleForm.taskType,
-      'starting_date': store.state.taskSearchRuleForm.startEndDate[0],
-      'finishing_date': store.state.taskSearchRuleForm.startEndDate[1]
+      'starting_date_0': store.state.taskSearchRuleForm.startEndDate[0],
+      'finishing_date_1': store.state.taskSearchRuleForm.startEndDate[1]
     }
     getData.getTaskHistory(lastData, {
       success (res) {
@@ -96,11 +96,72 @@ export default {
   postTaskInfo (store, data) {
     const postData = Object.assign({}, data)
     delete postData.refs
+    delete postData.showMsg
     getData.postTaskInfo(postData, {
       success (res) {
         data.refs()
         data.showMsg({msg: '任务分配成功！', type: 'success'})
-        // store.commit('', res.data)
+      }
+    })
+  },
+  postInfo (store, data) {
+    const postData = Object.assign({}, data)
+    delete postData.refs
+    delete postData.showMsg
+    console.log(postData)
+    getData.postInfo(postData, {
+      success (res) {
+        data.refs()
+        data.showMsg({msg: '数据录入成功！', type: 'success'})
+      }
+    })
+  },
+  getCurrentTask (store) {
+    getData.getCurrentTask({}, {
+      success (res) {
+        store.commit('GET_CURRENT_TASK', res.data)
+      }
+    })
+  },
+  getDataDetail (store) {
+    getData.getDataDetail({}, {
+      success (res) {
+        store.commit('GET_DATA_DETAIL', res.data)
+      }
+    })
+  },
+  getPlatform (store) {
+    getData.getPlatform({}, {
+      success (res) {
+        store.commit('GET_PLATFORM', res.data)
+      }
+    })
+  },
+  dealData (store, data) {
+    const postData = Object.assign({}, data)
+    delete postData.id
+    delete postData.message
+    delete postData.refs
+    getData.dealData(data.id, postData, {
+      success (res) {
+        if (res.status === 200) {
+          data.message()
+          if (data.refs) {
+            data.refs()
+          }
+        }
+      }
+    })
+  },
+  searchDealer (store, data) {
+    const postData = Object.assign({}, data)
+    delete postData.callBack
+    getData.searchDealer(postData, {
+      success (res) {
+        data.callBack()
+        const commitData = Object.assign({}, postData)
+        commitData.list = res.data
+        store.commit('DEAL_DEALER', commitData)
       }
     })
   }

@@ -43,6 +43,7 @@ export default {
     Request('/api/v1/models/', {
       type: 'get',
       data,
+      hideLoading: true,
       success: (res) => {
         config.success(res)
       }
@@ -52,6 +53,7 @@ export default {
     Request('/api/v1/model-details/', {
       type: 'get',
       data,
+      hideLoading: true,
       success: (res) => {
         config.success(res)
       }
@@ -79,6 +81,61 @@ export default {
     Request('/api/v1/evaluation-tasks/', {
       type: 'post',
       data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  postInfo (data, config) {
+    Request('/api/deal-data/v1/deal-records/', {
+      type: 'post',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  getCurrentTask (data, config) {
+    Request('/api/v1/evaluation-tasks/current-task/', {
+      type: 'get',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  getDataDetail (data, config) {
+    Request('/api/v1/validations/getone/', {
+      type: 'get',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  getPlatform (data, config) {
+    Request('/api/v1/domains/', {
+      type: 'get',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  dealData (id, data, config) {
+    Request(`/api/v1/validations/${id}/`, {
+      type: 'patch',
+      data,
+      success: (res) => {
+        config.success(res)
+      }
+    })
+  },
+  searchDealer (data, config) {
+    Request('/api/v1/dealers/', {
+      type: 'get',
+      data,
+      hideLoading: true,
       success: (res) => {
         config.success(res)
       }
