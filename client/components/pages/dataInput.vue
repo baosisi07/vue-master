@@ -5,8 +5,7 @@
   <el-form-item label="城市" prop="city">
     <el-cascader v-model="ruleForm.city"
       :options="cities"
-      placeholder="试试搜索城市"
-      filterable
+      placeholder="请选择城市"
     ></el-cascader>
   </el-form-item>
   <el-form-item label="商家" prop="shopName">
@@ -133,18 +132,18 @@ export default {
       loading: false,
       ruleForm: {
         city: [],
-        shopName: '',
         carType: [],
-        platform: '',
         mile: '',
-        color: '',
         carLicense: '',
         dealTime: '',
+        dealType: '',
+        price: '',
+        shopName: '',
+        color: '',
+        platform: '',
         contact: '',
         phone: '',
-        dealType: '',
-        useKind: '',
-        price: ''
+        useKind: ''
       },
       rules: {
         city: [
@@ -206,12 +205,16 @@ export default {
     getShopList (query) {
       if (query !== '') {
         this.loading = true
-        this.searchDealer({
+        var postData = {
           company_name: query,
           callBack: () => {
             this.loading = false
           }
-        })
+        }
+        if (this.ruleForm.city.length > 0) {
+          postData.city = this.ruleForm.city[1]
+        }
+        this.searchDealer(postData)
       } else {
         this.DEAL_DEALER({})
       }
@@ -223,16 +226,10 @@ export default {
           const data = {
             city: formObj.city[1],
             deal_date: formObj.dealTime,
-            mile: formObj.mile,
-            price: formObj.price * 10000,
-            deal_type: formObj.dealType,
+            mile: parseInt(formObj.mile),
+            price: parseInt(formObj.price * 10000),
+            deal_type: parseInt(formObj.dealType),
             reg_date: formObj.carLicense,
-            color: formObj.color,
-            contact: formObj.contact,
-            phone: formObj.phone,
-            domain: formObj.platform,
-            dealer: formObj.shopName,
-            usage_type: formObj.useKind,
             brand_slug: formObj.carType[0],
             model_slug: formObj.carType[1],
             model_detail_slug: formObj.carType[2],
@@ -243,6 +240,24 @@ export default {
                 type: res.type
               })
             }
+          }
+          if (formObj.shopName) {
+            data.dealer = formObj.shopName
+          }
+          if (formObj.color) {
+            data.color = formObj.color
+          }
+          if (formObj.platform) {
+            data.domain = formObj.platform
+          }
+          if (formObj.contact) {
+            data.contact = formObj.contact
+          }
+          if (formObj.phone) {
+            data.phone = formObj.phone
+          }
+          if (formObj.useKind) {
+            data.usage_type = parseInt(formObj.useKind)
           }
           this.postInfo(data)
           console.log('submit!')

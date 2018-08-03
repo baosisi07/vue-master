@@ -20,11 +20,13 @@
         <div class="el-col-8 b_space_normal">排量: <span>{{dataDetail.model_detail_slug.volume}}</span></div>
         <div class="el-col-8 b_space_normal">变速箱: <span>{{dataDetail.model_detail_slug.control}}</span></div>
         
-        <template v-for="item in dataDetail.competitors">
-          <div class="el-col-8 b_space_normal">{{item.domain.name}}收购价预测: <span>{{item.sell_price}}</span></div>
+        <!-- <template v-for="item in dataDetail.competitors">
+          <div :key="item.domain.name">
+            <div class="el-col-8 b_space_normal">{{item.domain.name}}收购价预测: <span>{{item.sell_price}}</span></div>
           <div class="el-col-8 b_space_normal">{{item.domain.name}}零售价预测: <span>{{item.buy_price}}</span></div>
           <div class="el-col-8 b_space_normal">{{item.domain.name}}利润率: <span>{{item.profit_ratio}}</span></div>
-        </template>
+          </div>         
+        </template> -->
 
         <div class="el-col-8 b_space_normal">电话: <span>{{dataDetail.dealer.phone}}</span></div>
         <div class="el-col-8 b_space_normal">地址: <span>{{dataDetail.dealer.address}}</span></div>
@@ -84,6 +86,7 @@ export default {
             type: 'success',
             message: '已确认!'
           })
+          this.getDataDetail()
         }
       })
     },
@@ -101,6 +104,7 @@ export default {
               type: 'success',
               message: '已作废!'
             })
+            this.getDataDetail()
           }
         })
       }).catch(() => {
@@ -131,6 +135,7 @@ export default {
               type: 'success',
               message: '已修改!'
             })
+            this.getDataDetail()
           }
         })
       }

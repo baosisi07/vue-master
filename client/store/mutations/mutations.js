@@ -83,13 +83,13 @@ export default {
     info.forEach(function (val) {
       let city = []
       city.label = val.name
-      city.value = val.slug
+      city.value = val.name
       city.children = []
       if (val.cities.length > 0) {
         val.cities.forEach(function (v) {
           const cityChild = {}
           cityChild.label = v.name
-          cityChild.value = v.slug
+          cityChild.value = v.name
           city.children.push(cityChild)
         })
       }

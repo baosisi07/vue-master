@@ -40,9 +40,8 @@ export default {
     })
   },
   getModel (data, config) {
-    Request('/api/v1/models/', {
+    Request('/api/v1/models/?parent=' + data.parent + '&order=' + data.order, {
       type: 'get',
-      data,
       hideLoading: true,
       success: (res) => {
         config.success(res)
@@ -50,9 +49,8 @@ export default {
     })
   },
   getModelDetail (data, config) {
-    Request('/api/v1/model-details/', {
+    Request('/api/v1/model-details/?global_slug=' + data.global_slug + '&order=' + data.order, {
       type: 'get',
-      data,
       hideLoading: true,
       success: (res) => {
         config.success(res)
@@ -132,9 +130,12 @@ export default {
     })
   },
   searchDealer (data, config) {
-    Request('/api/v1/dealers/', {
+    var isNeed = ''
+    if (data.city) {
+      isNeed = '&city=' + data.city
+    }
+    Request('/api/v1/dealers/?company_name=' + data.company_name + isNeed, {
       type: 'get',
-      data,
       hideLoading: true,
       success: (res) => {
         config.success(res)

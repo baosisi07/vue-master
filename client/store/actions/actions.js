@@ -2,7 +2,7 @@ import getData from '../../config/getData'
 import { getSessionStore } from '../../config/util'
 export default {
   userLogin (store, data) {
-    const postData = { 'account': data.username, 'password': data.password, 'appid': 'aaaf6b8021b411e7863a305a3a7b52d5' }
+    const postData = { 'account': data.username, 'password': data.password, 'appid': '68eac7a221b511e7863a305a3a7b52d5' }
     getData.Login(postData, {
       success (res) {
         postData.userId = res.data.id
