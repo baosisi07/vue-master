@@ -89,6 +89,8 @@ export default {
   platForm: [],
   tasksData: {},
   dataDetail: {},
+  isAbleInput: true,
+  isAbleValidate: true,
   colors: [
     {
       value: '红',

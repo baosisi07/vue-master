@@ -1,5 +1,6 @@
 <template>
    <div>
+     <v-card  type="1" ref="card"></v-card>
     <pageTitle vtitle="数据录入"></pageTitle>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" inline label-width="100px" class="content-body">
   <el-form-item label="城市" prop="city">
@@ -118,6 +119,7 @@
 <script>
 import { getSessionStore } from '../../config/util'
 import pageTitle from '../common/pageTitle.vue'
+import vCard from '../common/currentData.vue'
 import {
   mapState, mapActions, mapMutations
 } from 'vuex'
@@ -180,7 +182,7 @@ export default {
       next()
     }
   },
-  components: {pageTitle},
+  components: { pageTitle, vCard },
   computed: {
     ...mapState(['cities', 'useProperty', 'conditionList', 'dealTypeList', 'brandList', 'dealerList', 'colors', 'platForm'])
   },
@@ -195,7 +197,6 @@ export default {
     ...mapMutations(['DEAL_DEALER']),
     ...mapActions(['getCities', 'getBrand', 'getModel', 'getModelDetail', 'postInfo', 'searchDealer', 'getPlatform']),
     handleItemChange (val) {
-      console.log(val)
       if (val.length === 1) {
         this.getModel({parent: val[0], order: 'first_letter'})
       } else if (val.length === 2) {
@@ -239,6 +240,7 @@ export default {
                 message: res.msg,
                 type: res.type
               })
+              this.$refs.card.getCurrentTask({task_type: '1'})
             }
           }
           if (formObj.shopName) {

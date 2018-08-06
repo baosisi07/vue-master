@@ -20,16 +20,12 @@ export default {
     })
   },
   userLogout (store, data) {
-    const postData = { 'userId': store.userId }
-    getData.Logout(postData, {
-      success (res) {
-        postData.userId = ''
-        postData.isAdmin = ''
-        store.commit('LOGOUT_USER', postData)
-        data.router.push({
-          path: '/login'
-        })
-      }
+    const postData = {}
+    postData.userId = ''
+    postData.isAdmin = ''
+    store.commit('LOGOUT_USER', postData)
+    data.router.push({
+      path: '/login'
     })
   },
   getUserList (store) {
@@ -37,7 +33,7 @@ export default {
     const data = {user_type: userType}
     getData.getUserList(data, {
       success (res) {
-        store.commit('GET_USER', res.data)
+        store.commit('GET_USER', res.data.results)
       }
     })
   },
@@ -48,8 +44,8 @@ export default {
       'offset': store.state.pagination.pageSize * (store.state.pagination.currentPage - 1),
       'user': store.state.taskSearchRuleForm.people,
       'task_type': store.state.taskSearchRuleForm.taskType,
-      'starting_date_0': store.state.taskSearchRuleForm.startEndDate[0],
-      'finishing_date_1': store.state.taskSearchRuleForm.startEndDate[1]
+      'starting_date_0': store.state.taskSearchRuleForm.startEndDate.length > 0 ? store.state.taskSearchRuleForm.startEndDate[0] : '',
+      'starting_date_1': store.state.taskSearchRuleForm.startEndDate.length > 0 ? store.state.taskSearchRuleForm.startEndDate[1] : ''
     }
     getData.getTaskHistory(lastData, {
       success (res) {
@@ -116,10 +112,15 @@ export default {
       }
     })
   },
-  getCurrentTask (store) {
-    getData.getCurrentTask({}, {
+  getCurrentTask (store, data) {
+    getData.getCurrentTask(data, {
       success (res) {
-        store.commit('GET_CURRENT_TASK', res.data)
+        if (res.status === 200) {
+          store.commit('CHANGE_TASK_TYPE_OPERATE', {success: 200})
+          store.commit('GET_CURRENT_TASK', res.data)
+        } else if (res.status === 400) {
+          store.commit('CHANGE_TASK_TYPE_OPERATE', data)
+        }
       }
     })
   },

@@ -89,7 +89,7 @@ export default {
         if (valid) {
           const formObj = this.assignForm
           const data = {
-            user_id: formObj.people,
+            user: formObj.people,
             task_name: formObj.taskName,
             task_amount: formObj.number,
             starting_date: formObj.startEndDate[0],

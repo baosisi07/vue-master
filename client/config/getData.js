@@ -58,9 +58,8 @@ export default {
     })
   },
   getTaskHistory (data, config) {
-    Request('/api/v1/evlauation-tasks/', {
+    Request('/api/v1/evaluation-tasks/?limit=' + data.limit + '&offset=' + data.offset + '&user=' + data.user + '&task_type=' + data.task_type + '&starting_date_0=' + data.starting_date_0 + '&starting_date_1=' + data.starting_date_1, {
       type: 'get',
-      data,
       success: (res) => {
         config.success(res)
       }
@@ -94,9 +93,8 @@ export default {
     })
   },
   getCurrentTask (data, config) {
-    Request('/api/v1/evaluation-tasks/current-task/', {
+    Request('/api/v1/evaluation-tasks/current-task/?task_type=' + data.task_type, {
       type: 'get',
-      data,
       success: (res) => {
         config.success(res)
       }

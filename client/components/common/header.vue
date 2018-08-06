@@ -7,7 +7,7 @@
                     <span class="logo_suffix">公平价业务管理系统</span>
                 </div>
             </el-col>
-         <el-col :md="3" class="userInfo">
+         <el-col :md="4" class="userInfo">
             <div class="user-header">
                 <el-dropdown trigger="click">
                 <div><img src="../../assets/images/b_header.jpg" width="40px" />

@@ -69,7 +69,7 @@ if (isDev) {
       app: path.join(__dirname, '../client/index.js')
     },
     output: {
-      filename: '[name].[chunkhash:8].js'
+      filename: 'js/[name].[chunkhash:8].js'
     },
     module: {
       rules: [
@@ -98,7 +98,7 @@ if (isDev) {
       runtimeChunk: true
     },
     plugins: defaultPlugins.concat([
-      new ExtractPlugin('styles.[contentHash:8].css')
+      new ExtractPlugin('css/styles.[contentHash:8].css')
 
       // new webpack.optimize.CommonsChunkPlugin({
       //   name: 'vendor'

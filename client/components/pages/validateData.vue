@@ -1,5 +1,6 @@
 <template>
    <div>
+     <v-card  type="2" ref="card"></v-card>
     <pageTitle vtitle="数据验证"></pageTitle>
     <div class="content-body">
       <div class="el-row b_flex">
@@ -12,32 +13,32 @@
         <div class="el-col-8 b_space_normal">流行度: <span>{{dataDetail.model_detail_slug.popular}}</span></div>
         <div class="el-col-8 b_space_normal">车型类别: <span>{{dataDetail.model_detail_slug.body_model}}</span></div>
         <div class="el-col-8 b_space_normal">行驶里程: <span>{{dataDetail.mile}}万公里</span></div>
-        <div class="el-col-8 b_space_normal">新车价: <span>{{dataDetail.model_detail_slug.price_bn}}</span></div>
+        <div class="el-col-8 b_space_normal">新车价: <span>{{dataDetail.model_detail_slug.price_bn}}万元</span></div>
         <div class="el-col-8 b_space_normal">上牌时间: <span>{{dataDetail.reg_date}}</span></div>
         <div class="el-col-8 b_space_normal">平台: <span>{{dataDetail.domain.name}}</span></div>
-        <div class="el-col-8 b_space_normal">车商: <span>{{dataDetail.dealer.company_name}}</span></div>
+        <div class="el-col-8 b_space_normal" v-if="dataDetail.dealer">车商: <span>{{dataDetail.dealer.company_name}}</span></div>
         <div class="el-col-8 b_space_normal">颜色: <span>{{dataDetail.color}}</span></div>
-        <div class="el-col-8 b_space_normal">排量: <span>{{dataDetail.model_detail_slug.volume}}</span></div>
+        <div class="el-col-8 b_space_normal">排量: <span>{{dataDetail.model_detail_slug.volume}}L</span></div>
         <div class="el-col-8 b_space_normal">变速箱: <span>{{dataDetail.model_detail_slug.control}}</span></div>
         
-        <!-- <template v-for="item in dataDetail.competitors">
-          <div :key="item.domain.name">
-            <div class="el-col-8 b_space_normal">{{item.domain.name}}收购价预测: <span>{{item.sell_price}}</span></div>
-          <div class="el-col-8 b_space_normal">{{item.domain.name}}零售价预测: <span>{{item.buy_price}}</span></div>
-          <div class="el-col-8 b_space_normal">{{item.domain.name}}利润率: <span>{{item.profit_ratio}}</span></div>
+        <template v-for="item in dataDetail.competitors">
+          <div :key="item.domain.id">
+            <div class="el-col-8 b_space_normal">{{item.domain.name}}收购价预测: <span>{{item.sell_price}}万元</span></div>
+          <div class="el-col-8 b_space_normal">{{item.domain.name}}零售价预测: <span>{{item.buy_price}}万元</span></div>
+          <div class="el-col-8 b_space_normal">{{item.domain.name}}利润率: <span>{{item.profit_ratio}}%</span></div>
           </div>         
-        </template> -->
-
-        <div class="el-col-8 b_space_normal">电话: <span>{{dataDetail.dealer.phone}}</span></div>
-        <div class="el-col-8 b_space_normal">地址: <span>{{dataDetail.dealer.address}}</span></div>
+        </template>
+        <div class="el-col-8 b_space_normal" v-if="dataDetail.dealer">电话: <span>{{dataDetail.dealer.phone}}</span></div>
+        <div class="el-col-8 b_space_normal" v-if="dataDetail.dealer">地址: <span>{{dataDetail.dealer.address}}</span></div>
         <div class="el-col-8 b_space_normal">交易时间: <span>{{dataDetail.deal_date}}</span></div>
         <div class="el-col-8 b_space_normal">交易价: <span>{{dataDetail.private_price}}</span></div>
       </div>
       <div class="btn_group">
-    <el-button type="primary" @click="dialogFormVisible = true">填写验证价格</el-button>
-    <el-button @click="confirmData">确认</el-button>
-    <el-button @click="deleteConfirm">数据作废</el-button>
-  </div>
+        <el-button type="primary" @click="dialogFormVisible = true">填写验证价格</el-button>
+        <el-button @click="confirmData">确认</el-button>
+        <el-button @click="deleteConfirm">数据作废</el-button>
+      </div>
+
     </div>
 
     <el-dialog title="填写价格" :visible.sync="dialogFormVisible" width="30%">
@@ -53,11 +54,13 @@
     <el-button type="primary" @click="editData">确认并保存</el-button>
   </div>
 </el-dialog>
+
    </div>
 </template>
 <script>
 import pageTitle from '../common/pageTitle.vue'
 import { mapState, mapActions } from 'vuex'
+import vCard from '../common/currentData.vue'
 export default {
   data () {
     return {
@@ -68,7 +71,7 @@ export default {
       }
     }
   },
-  components: {pageTitle},
+  components: { pageTitle, vCard },
   computed: {
     ...mapState(['dataDetail'])
   },
@@ -87,6 +90,7 @@ export default {
             message: '已确认!'
           })
           this.getDataDetail()
+          this.$refs.card.getCurrentTask({task_type: '2'})
         }
       })
     },
@@ -105,6 +109,7 @@ export default {
               message: '已作废!'
             })
             this.getDataDetail()
+            this.$refs.card.getCurrentTask({task_type: '2'})
           }
         })
       }).catch(() => {
@@ -124,8 +129,8 @@ export default {
         this.dealData({
           id: this.dataDetail.id,
           status: 1,
-          sell_price: this.form.purchesePrice,
-          buy_price: this.form.retailPrice,
+          sell_price: parseInt(this.form.purchesePrice * 10000),
+          buy_price: parseInt(this.form.retailPrice * 10000),
           refs: () => {
             this.$refs['priceForm'].resetFields()
             this.dialogFormVisible = false
@@ -136,6 +141,7 @@ export default {
               message: '已修改!'
             })
             this.getDataDetail()
+            this.$refs.card.getCurrentTask({task_type: '2'})
           }
         })
       }

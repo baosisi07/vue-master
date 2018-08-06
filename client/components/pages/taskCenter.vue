@@ -44,12 +44,12 @@
       <el-card>
           <div slot="header" class="clearfix">
               <span>任务列表</span>
-              <el-button style="float: right; padding: 3px 0" type="text">新建</el-button>
+              <!-- <el-button style="float: right; padding: 3px 0" type="text">新建</el-button> -->
             </div>
             <el-table :data="taskHistoryTable" style="width: 100%" stripe>
             <el-table-column prop="name"  label="姓名"  width="180"></el-table-column>
             <el-table-column prop="taskDate" label="任务日期" width="180"></el-table-column>
-            <el-table-column prop="taskType" label="任务类型" width="180"> </el-table-column>
+            <el-table-column prop="taskTypeName" label="任务类型" width="180"> </el-table-column>
             <el-table-column prop="taskName" label="任务名称" align="right"> </el-table-column>
             <el-table-column prop="totalTask" label="任务总量" align="right"> </el-table-column>
             <el-table-column prop="finished" label="已完成量" align="right"> </el-table-column>
@@ -71,7 +71,7 @@ export default {
       taskSearchRuleForm: {
         people: '',
         taskType: '',
-        startEndDate: ''
+        startEndDate: []
       }
     }
   },
@@ -84,7 +84,7 @@ export default {
     this.getTaskHistory({
       people: '',
       taskType: '',
-      startEndDate: ''
+      startEndDate: []
     })
   },
   methods: {

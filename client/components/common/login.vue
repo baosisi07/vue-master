@@ -5,7 +5,7 @@
 公平价业务管理系统</div>
   <div class="container">
     <div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" size="medium">
   <el-form-item prop="name">
     <el-input v-model="ruleForm.name" placeholder="请输入账号"></el-input>
   </el-form-item>

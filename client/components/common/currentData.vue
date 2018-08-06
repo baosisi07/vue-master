@@ -28,25 +28,33 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import { getSessionStore } from '../../config/util'
 
   export default {
+    props: ['type'],
     data () {
       return {
         isShow: true
       }
     },
     computed: {
-      ...mapState(['tasksData'])
+      ...mapState(['tasksData', 'isAbleInput', 'isAbleValidate'])
     },
     created () {
-      console.log('created')
-      const defaultNav = getSessionStore('defaultNav')
-      if (defaultNav.indexOf('dataInput') > 0 || defaultNav.indexOf('validateData') > 0) {
-        this.isShow = true
-        this.getCurrentTask()
-      } else {
-        this.isShow = false
+      this.getCurrentTask({task_type: this.type})
+    },
+    beforeMount () {
+      console.log(this.$store.state.isAbleInput)
+      if (this.type === '1' && !this.$store.state.isAbleInput) {
+        this.$message({
+          message: '当前没有任务！',
+          type: 'warning'
+        })
+      }
+      if (this.type === '2' && !this.$store.state.isAbleValidate) {
+        this.$message({
+          message: '当前没有任务！',
+          type: 'warning'
+        })
       }
     },
     methods: {

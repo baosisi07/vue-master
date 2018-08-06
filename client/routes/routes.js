@@ -7,6 +7,7 @@ export default [
   {
     path: '/home',
     component: () => import('../components/pages/home.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',

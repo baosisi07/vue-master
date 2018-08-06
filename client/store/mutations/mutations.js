@@ -1,4 +1,4 @@
-import { RECORD_USERINFO, LOGOUT_USER, GET_MENUS, CURRENT_ROUTER, OBTAIN_TASK_HISTORY, GET_CURRENT_TASK, GET_CITIES, GET_BRAND, GET_MODEL, GET_USER, TASK_SEARCH, GET_MODEL_DETAIL, GET_DATA_DETAIL, GET_PLATFORM, DEAL_DEALER } from './mutation-type'
+import { RECORD_USERINFO, LOGOUT_USER, GET_MENUS, CURRENT_ROUTER, OBTAIN_TASK_HISTORY, GET_CURRENT_TASK, GET_CITIES, GET_BRAND, GET_MODEL, GET_USER, TASK_SEARCH, GET_MODEL_DETAIL, GET_DATA_DETAIL, GET_PLATFORM, DEAL_DEALER, CHANGE_TASK_TYPE_OPERATE } from './mutation-type'
 import { setSessionStore, removeSessionStore } from '../../config/util'
 import vue from 'vue'
 export default {
@@ -73,6 +73,7 @@ export default {
       item.totalTask = val.task_amount
       item.finished = val.finished_amount
       item.planFinish = val.finishing_date
+      item.taskTypeName = val.task_type === '1' ? '数据录入' : '数据验证'
       data.push(item)
     })
     state.taskHistoryTable = data
@@ -192,6 +193,18 @@ export default {
         return item.label.toLowerCase()
           .indexOf(info.company_name.toLowerCase()) > -1
       })
+    }
+  },
+  [CHANGE_TASK_TYPE_OPERATE] (state, info) {
+    if (info.success) {
+      state.isAbleInput = true
+      state.isAbleValidate = true
+    } else {
+      if (info.task_type === '1') {
+        state.isAbleInput = false
+      } else if (info.task_type === '2') {
+        state.isAbleValidate = false
+      }
     }
   }
 }
