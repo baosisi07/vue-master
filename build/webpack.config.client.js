@@ -69,7 +69,7 @@ if (isDev) {
       app: path.join(__dirname, '../client/index.js')
     },
     output: {
-      filename: 'js/[name].[chunkhash:8].js'
+      filename: '[name].[chunkhash:8].js'
     },
     module: {
       rules: [
