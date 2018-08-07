@@ -98,8 +98,7 @@ if (isDev) {
       runtimeChunk: true
     },
     plugins: defaultPlugins.concat([
-      new ExtractPlugin('css/styles.[contentHash:8].css')
-
+      new ExtractPlugin('css/styles.[contentHash:8].css'),
       // new webpack.optimize.CommonsChunkPlugin({
       //   name: 'vendor'
       // }),

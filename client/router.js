@@ -4,7 +4,7 @@ export default () => {
   return new Router({
     routes,
     mode: 'history',
-    // base: '/base/',
+    // base: '/dist',
     linkActiveClass: 'link-active',
     linkExactActiveClass: 'link-exact-active',
     scrollBehavior (to, from, savedPosition) {

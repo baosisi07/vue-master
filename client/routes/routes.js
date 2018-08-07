@@ -42,6 +42,10 @@ export default [
   },
   {
     path: '/login',
-    component: () => import('../components/common/login.vue')
+    component: resolve => require(['../components/common/login.vue'], resolve)
+  },
+  {
+    path: '*',
+    component: () => import('../components/common/notFound.vue')
   }
 ]

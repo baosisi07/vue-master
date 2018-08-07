@@ -8,7 +8,7 @@ const config = {
   output: {
     filename: 'bundle.[hash:8].js',
     path: path.join(__dirname, '../dist'),
-    publicPath: 'http://127.0.0.1:8000/dist'
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -44,7 +44,7 @@ const config = {
         use: [{
           loader: 'file-loader',
           options: {
-            name: 'fonts/[path][name]-[hash:8].[ext]'
+            name: 'fonts/[name]-[hash:8].[ext]'
           }
         }]
       },
@@ -54,7 +54,7 @@ const config = {
           loader: 'url-loader',
           options: {
             limit: 1024,
-            name: 'resources/[path][name]-[hash:8].[ext]'
+            name: 'resources/[name]-[hash:8].[ext]'
           }
         }
         ]
