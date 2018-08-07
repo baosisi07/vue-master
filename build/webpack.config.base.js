@@ -8,7 +8,7 @@ const config = {
   output: {
     filename: 'bundle.[hash:8].js',
     path: path.join(__dirname, '../dist'),
-    publicPath: '/dist'
+    publicPath: '/vue-master/dist'
   },
   module: {
     rules: [
