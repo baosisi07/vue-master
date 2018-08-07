@@ -60,39 +60,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.loginPage {
-  height: 100%;
-  text-align: center;
-  display: flex;
-  -ms-flex-align: center;
-  -ms-flex-pack: center;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  padding-bottom: 40px;
-  background-color: #f5f5f5;
-}
-.loginContent {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.loginHeader {
-  color: #333;
-  font-size: 30px;
-  margin-bottom: 40px;
-  letter-spacing: 3px;
-  font-weight: bold;
-}
-.loginFooter {
-  color: #6c757d;
-  margin-top: 30px;
-}
-.el-button {
-  width: 100%;
-}
-</style>

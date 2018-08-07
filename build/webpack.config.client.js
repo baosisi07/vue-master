@@ -37,7 +37,7 @@ if (isDev) {
     module: {
       rules: [
         {
-          test: /\.scss$/,
+          test: /\.(scss|sass)$/,
           use: [
             'vue-style-loader',
             'css-loader',
@@ -74,7 +74,7 @@ if (isDev) {
     module: {
       rules: [
         {
-          test: /\.scss$/,
+          test: /\.(scss|sass)$/,
           use: ExtractPlugin.extract({
             fallback: 'vue-style-loader',
             use: [
